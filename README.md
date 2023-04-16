@@ -6,15 +6,17 @@
         CUDNN 8.6.0
         TensorRT 8.6.0
     
-    自行在WSL2上安装[COLMAP](https://github.com/colmap/colmap)
+    自行在WSL2上安装colmap
+[COLMAP](https://github.com/colmap/colmap)
 
 ## 文件组织
     client (on Windows)
-        --[instant-ngp](https://github.com/NVlabs/instant-ngp)
+        --instant-ngp
             --instant-ngp.exe
         --resource
         ...
-    
+[instant-ngp](https://github.com/NVlabs/instant-ngp)
+
 ## 运行
     Windows:
         start.bat
