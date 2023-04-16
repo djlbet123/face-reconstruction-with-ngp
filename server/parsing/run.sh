@@ -1,0 +1,1 @@
+python infer.py /mnt/d/university/grade4/graduation-project/video/test/people7_train_matting.mp4 /mnt/d/university/grade4/graduation-project/video/test/people7_train_matting True

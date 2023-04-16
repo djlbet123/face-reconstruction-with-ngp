@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/root/server/trt/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DAPI_EXPORTS --options-file CMakeFiles/rvm.dir/includes_CUDA.rsp -g -std=c++14 --generate-code=arch=compute_86,code=[compute_86,sm_86]   -std=c++14 -x cu -c /root/server/trt/src/infer.cu -o CMakeFiles/rvm.dir/src/infer.cu.o",
+  "file": "/root/server/trt/src/infer.cu",
+  "output": "CMakeFiles/rvm.dir/src/infer.cu.o"
+},
+{
+  "directory": "/root/server/trt/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DAPI_EXPORTS --options-file CMakeFiles/rvm.dir/includes_CUDA.rsp -g -std=c++14 --generate-code=arch=compute_86,code=[compute_86,sm_86]   -std=c++14 -x cu -c /root/server/trt/src/rvm_hp.cu -o CMakeFiles/rvm.dir/src/rvm_hp.cu.o",
+  "file": "/root/server/trt/src/rvm_hp.cu",
+  "output": "CMakeFiles/rvm.dir/src/rvm_hp.cu.o"
+},
+{
+  "directory": "/root/server/trt/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler -DAPI_EXPORTS --options-file CMakeFiles/rvm.dir/includes_CUDA.rsp -g -std=c++14 --generate-code=arch=compute_86,code=[compute_86,sm_86]   -std=c++14 -x cu -c /root/server/trt/src/trt_model.cu -o CMakeFiles/rvm.dir/src/trt_model.cu.o",
+  "file": "/root/server/trt/src/trt_model.cu",
+  "output": "CMakeFiles/rvm.dir/src/trt_model.cu.o"
+}
+]
