@@ -2,6 +2,7 @@
 
 ## Pipeline
 ![image](https://github.com/djlbet123/face-reconstruction-with-ngp/blob/master/img/pipeline.jpg)
+使用instant-ngp重建人脸需要拍摄人脸的各个角度，实际使用face align模型时，发现90度人脸的landmarks误差非常大，故额外使用matting模型辅助分割。
 
 ## Result
 ![image](https://github.com/djlbet123/face-reconstruction-with-ngp/blob/master/img/result.jpg)
