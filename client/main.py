@@ -5,13 +5,16 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QStackedWidget, QHBoxLayout, QLabel, QWidget, QVBoxLayout, QFileDialog, QListWidget, QListWidgetItem
 
-from qfluentwidgets import (NavigationInterface, NavigationItemPostion, NavigationWidget, MessageBox, PrimaryPushButton, InfoBarPosition, 
+from qfluentwidgets import (NavigationInterface, NavigationItemPosition, NavigationWidget, MessageBox, PrimaryPushButton, InfoBarPosition, 
                             isDarkTheme, setTheme, Theme, setThemeColor, NavigationToolButton, NavigationPanel, SwitchButton, InfoBar)
 from qfluentwidgets import FluentIcon as FIF
 from qframelesswindow import FramelessWindow, StandardTitleBar
-import requests
 
-mlp_server_url = 'http://172.24.160.69:18924' + '/run'
+import requests
+import subprocess
+import shutil
+
+mlp_server_url = 'http://172.22.140.199:18924' + '/run'
 
 def send(data):
     try:
@@ -150,7 +153,15 @@ class preprocess(Widget):
         data['type'] = 'calculate'
         data['train_flag'] = self.radioButton.isChecked()
         self.message()
-        send(data)
+        name = data['name']
+        output_path = os.path.join(self.filePath, name[:-4])
+        print("请等待colmap计算相机姿态，这通常需要几分钟时间")
+        if os.path.exists(output_path):
+            shutil.rmtree(output_path)
+        os.makedirs(output_path)
+        subprocess.call(f"python ./colmap2nerf.py --video_in {os.path.join(self.filePath, name)} --video_fps 3 --run_colmap --aabb_scale 16 --images {os.path.join(output_path, 'images')} \
+                    --out {os.path.join(output_path, 'transforms.json')} --colmap_db {os.path.join(output_path, 'colmap.db')} --text {os.path.join(output_path, 'colmap_text')}", shell=True)
+        print("预处理完成，可进行神经辐射场训练")
 
 class train(Widget):
     def __init__(self, text: str, parent=None):
@@ -246,7 +257,7 @@ class NavigationBar(QWidget):
         self.navigationPanel.raise_()
         self.navigationPanel.expand()
 
-    def addItem(self, routeKey, icon, text: str, onClick, selectable=True, position=NavigationItemPostion.TOP):
+    def addItem(self, routeKey, icon, text: str, onClick, selectable=True, position=NavigationItemPosition.TOP):
         def wrapper():
             onClick()
             self.setTitle(text)
@@ -254,7 +265,7 @@ class NavigationBar(QWidget):
         self.navigationPanel.addItem(
             routeKey, icon, text, wrapper, selectable, position)
 
-    def addSeparator(self, position=NavigationItemPostion.TOP):
+    def addSeparator(self, position=NavigationItemPosition.TOP):
         self.navigationPanel.addSeparator(position)
 
     def setCurrentItem(self, routeKey: str):
@@ -338,7 +349,7 @@ class Window(FramelessWindow):
             icon=FIF.FOLDER,
             text='模型展示',
             onClick=lambda: self.switchTo(self.show_widge),
-            position=NavigationItemPostion.SCROLL
+            position=NavigationItemPosition.SCROLL
         )
         
         self.navigationInterface.addItem(
@@ -346,7 +357,7 @@ class Window(FramelessWindow):
             icon=FIF.FOLDER,
             text='工具箱',
             onClick=lambda: self.switchTo(self.util_widge),
-            position=NavigationItemPostion.SCROLL
+            position=NavigationItemPosition.SCROLL
         )
 
         self.stackWidget.currentChanged.connect(self.onCurrentInterfaceChanged)

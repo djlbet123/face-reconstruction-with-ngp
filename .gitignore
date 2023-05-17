@@ -1,6 +1,5 @@
 __pycache__
 client/instant-ngp/
 .vscode
-server/colmap/
 pipnet_resnet101.onnx
 faceboxesv2.onnx
